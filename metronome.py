@@ -15,6 +15,10 @@ class metronome:
     def __init__(self, audio, bpm, measures, chord_beats):
         self.audio = audio
         self.bpm = bpm
+        if self.bpm < self.bpm_min:
+            self.bpm = self.bpm_min
+        elif self.bpm > self.bpm_max:
+            self.bpm = self.bpm_max
         self.measures = measures
         self.chord_beats = chord_beats
         self.T = 60/self.bpm

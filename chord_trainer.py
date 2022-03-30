@@ -13,39 +13,43 @@ import chords
 # process command line args
 
 def usage(out):
-    print(f'usage: {sys.argv[0]} [-h -d -v <device name> -c <chord list>]\n')
-    print('-d , --devices      : list all audio devices')
-    print('-v <device name>    : show device(s) with verbose info (eg. "-v Speaker" shows all')
-    print('                      devices with "Speaker" in its name)')
-    print('-c <chord list>     : use comma separated chord list as chart (eg. "-c Am,D,Gm,C")')
-    print('-h, --help          : show usage information')
+    print(f'usage: {sys.argv[0]} [-b <bpm> -c <chords> -d -v <device> -h]\n')
+    print('-b <bpm>,    --bpm     : set tempo to <bpm>')
+    print('-c <chords>, --chords  : use comma separated list as chart (eg. "-c Am,D,Gm,C")')
+    print('-d,          --devices : list all audio devices')
+    print('-v <device>, --verbose : show device(s) with verbose info (eg. "-v Speaker" shows all')
+    print('                         devices with "Speaker" in its name)')
+    print('-h,          --help    : show usage information')
     sys.exit(out)
 
 
 chart = ''
+bpm = 0
 try:
-    opts, args = getopt.getopt(sys.argv[1:],'hdv:c:',["help","devices","device=","chords="])
+    opts, args = getopt.getopt(sys.argv[1:],'bc:dv:h',["bpm=","chords=","devices","verbose=","help"])
 
 except getopt.GetoptError:
     usage(2)
 
 for opt, arg in opts:
-    if opt in ['-h', '--help']:
-        usage(None)
+    if opt in ['-b', '--bpm']:
+        bpm = int(arg)
+    elif opt in ['-c', '--chords']:
+        chart = []
+        for chord in arg.split(','):
+            chart.append((chord.split('m')[0], 'min' if 'm' in chord else 'maj'))
     elif opt in ['-d', '--devices']:
         audio = audio.audio()
         audio.print_devices()
         audio.uninit()
         sys.exit()
-    elif opt in ['-v', '--device']:
+    elif opt in ['-v', '--verbose']:
         audio = audio.audio()
         audio.print_devices(filter=arg, verbose=True)
         audio.uninit()
         sys.exit()
-    elif opt in ['-c', '--chords']:
-        chart = []
-        for chord in arg.split(','):
-            chart.append((chord.split('m')[0], 'min' if 'm' in chord else 'maj'))
+    elif opt in ['-h', '--help']:
+        usage(None)
 
 
 # ----------------------------------------------------------------------------------------------
@@ -146,8 +150,9 @@ game.reset()
 game.set_chart(chords.chords.chart_maj[0] if chart == '' else chart)
 
 # create the metronome
+bpm = 110 if bpm == 0 else bpm  # use command-line requested tempo if requested
 metronome = metronome.metronome(
-    audio, bpm=110, measures=game.chart_pos_max, chord_beats=4
+    audio, bpm=bpm, measures=game.chart_pos_max, chord_beats=4
 )
 audio.set_metronome(metronome)
 
