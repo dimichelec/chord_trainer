@@ -4,6 +4,7 @@ chord_trainer is an open source game I made to help with practicing guitar chord
 
 chord_trainer uses the [madmom](https://github.com/CPJKU/madmom) audio signal processing library to recognize audio onset and chord recognition.
 
+![chord_trainer](screenshot_1.png "chord_trainer.py screenshot")
 
 # usage
 
