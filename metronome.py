@@ -61,7 +61,8 @@ class metronome:
             self.measure += 1
             if self.measure > self.measures:
                 self.measure = 1
-        return 1, self.measure, self.beat
+    
+        return (1 if self.beat == 1 else 2), self.measure, self.beat
 
 
     def reset(self):

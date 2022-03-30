@@ -79,6 +79,8 @@ class game:
         self.ui.draw_beatclock(1, 1)
         self.ui.draw_score('0' + 20*' ')
         self.ui.draw_chart_pointer(0)
+        self.ui.draw_stats_line(1,40*' ')
+        self.ui.draw_stats_line(2,40*' ')
         self.beat_start = time.perf_counter()
 
 
@@ -165,7 +167,7 @@ audio.start_stream()
 
 onset   = False
 run     = False
-lead_in = True
+lead_in = 4
 
 while audio.is_active():
     
@@ -173,12 +175,12 @@ while audio.is_active():
     if run:
         state, measure, beat = metronome.service()
         if state > 0:
-            if lead_in:
-                if beat == 4:
-                    lead_in = False
+            if lead_in > 0:
+                lead_in -= 1
+                if lead_in == 0:
                     metronome.reset()
             else:
-                if beat == 1:
+                if state == 1:
                     beat_start = time.perf_counter()
                     game.first_beat(measure)
                     if game.chord_count % 100 == 0:
@@ -212,7 +214,7 @@ while audio.is_active():
     elif key == 'r':                        # reset game
         metronome.reset()
         game.reset()
-        lead_in = True
+        lead_in = 4
 
 
     #  1 = spectral flux over on threshold
