@@ -19,6 +19,6 @@ chord_trainer uses the [madmom](https://github.com/CPJKU/madmom) audio signal pr
 
   
   
-
+# Acknowledgements
 written by [Carmen DiMichele](https://dimichelec.wixsite.com/carmendimichele) 
 
