@@ -6,14 +6,18 @@ chord_trainer is an open source game to help with practicing guitar chords writt
 
 # usage
 ```
-  usage: chord_trainer.py [-b <bpm> -c <chords> -d -v <device> -h]
+usage: chord_trainer.py -i <device ID> -o <device ID> -b <bpm> -c <chords> -d -v <device> -h
 
-  -b <bpm>,    --bpm     : set tempo to <bpm>
-  -c <chords>, --chords  : use comma separated list as chart (eg. "-c Am,D,Gm,C")
-  -d,          --devices : list all audio devices
-  -v <device>, --verbose : show device(s) with verbose info (eg. "-v Speaker" shows all
-                           devices with "Speaker" in its name)
-  -h,          --help    : show usage information
+-i,          --input   : use this device ID for input
+-o,          --output  : use this device ID for output
+-b <bpm>,    --bpm     : set tempo to <bpm>
+-c <chords>, --chords  : use comma separated list as chart (eg. "-c Am,D,Gm,C")
+-d,          --devices : list all audio devices
+-v <device>, --verbose : show device(s) with verbose info (eg. "-v Speaker" shows all
+                         devices with "Speaker" in its name)
+-h,          --help    : show usage information
+
+chord_trainer.ini could also be used to set any of these parameters and more.
 ```
   
   
