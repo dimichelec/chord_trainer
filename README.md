@@ -4,6 +4,8 @@ chord_trainer is an open source game to help with practicing guitar chords writt
 
 ![chord_trainer](screenshot_1.png "chord_trainer.py screenshot")
 
+[Demo Video](chord_trainer_demo_1.mp4 "chord_trainer.py demo video")
+
 
 # usage
 ```
