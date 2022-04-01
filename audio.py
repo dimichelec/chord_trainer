@@ -36,7 +36,7 @@ class audio:
             outlat = self.audioinstance.get_device_info_by_index(device)['defaultHighOutputLatency']
             name   = self.audioinstance.get_device_info_by_index(device)['name']
             name   = re.sub(r'[\r,\n]+',' ', name)
-            if inout == 0:
+            if inout == 0:  # input devices
                 if filter is None or filter in name:
                     if ins > 0 or verbose:
                         if verbose:
@@ -44,7 +44,7 @@ class audio:
                         print(f'{device}: {name} - {rate/1000:.1f}kHz - {inlat*1000:.0f}ms')
                         if verbose:
                             pprint(self.audioinstance.get_device_info_by_index(device), indent=2)
-            else:
+            else:   # output devices
                 if filter is None or filter in name:
                     if outs > 0 or verbose:
                         if verbose:
@@ -62,6 +62,29 @@ class audio:
         if io in [None, 1]:
             print("\nOuts:")
             self.print_device_set(1, filter, verbose)
+
+
+    # get fastest devices by latency
+    def get_fastest_devices(self, inout, filter=None):
+        devices = []
+        for device in range (self.audioinstance.get_device_count()):
+            ins    = self.audioinstance.get_device_info_by_index(device)['maxInputChannels']
+            outs   = self.audioinstance.get_device_info_by_index(device)['maxOutputChannels']
+            rate   = self.audioinstance.get_device_info_by_index(device)['defaultSampleRate']
+            inlat  = self.audioinstance.get_device_info_by_index(device)['defaultHighInputLatency']
+            outlat = self.audioinstance.get_device_info_by_index(device)['defaultHighOutputLatency']
+            name   = self.audioinstance.get_device_info_by_index(device)['name']
+            name   = re.sub(r'[\r,\n]+',' ', name)
+            if inout == 0:  # input devices
+                if (filter is None or filter in name) and ins > 0:
+                    devices.append((int(inlat*1000), device, name[:25], rate))
+                    #print(f'{device}: {name} - {rate/1000:.1f}kHz - {inlat*1000:.0f}ms')
+            else:   # output devices
+                if (filter is None or filter in name) and outs > 0:
+                    devices.append((int(outlat*1000), device, name[:25], rate))
+                    #print(f'{device}: {name} - {rate/1000:.1f}kHz - {outlat*1000:.0f}ms')
+        devices.sort()
+        return devices
 
 
     def callback(self, in_data, frame_count, time_info, status):
