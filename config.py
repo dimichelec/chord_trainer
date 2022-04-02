@@ -8,14 +8,15 @@ import configparser
 
 def usage(out):
     print(f'usage: {sys.argv[0]} -i <device ID> -o <device ID> -b <bpm> -c <chords> -d -v <device> -h\n')
-    print('-i,          --input   : use this device ID for input')
-    print('-o,          --output  : use this device ID for output')
-    print('-b <bpm>,    --bpm     : set tempo to <bpm>')
-    print('-c <chords>, --chords  : use comma separated list as chart (eg. "-c Am,D,Gm,C")')
-    print('-d,          --devices : list all audio devices')
-    print('-v <device>, --verbose : show device(s) with verbose info (eg. "-v Speaker" shows all')
-    print('                         devices with "Speaker" in its name)')
-    print('-h,          --help    : show usage information')
+    print('-i <device ID>, --input   : use this device ID for input')
+    print('-o <device ID>, --output  : use this device ID for output')
+    print('-b <bpm>,       --bpm     : set tempo to <bpm>')
+    print('-c <chords>,    --chords  : use comma separated list as chart (eg. "-c Am,D,Gm,C")')
+    print('-d,             --devices : list all audio devices')
+    print('-e <beats>,     --beats   : beats per chord')
+    print('-v <device>,    --verbose : show device(s) with verbose info (eg. "-v Speaker" shows all')
+    print('                            devices with "Speaker" in its name)')
+    print('-h,             --help    : show usage information')
     print('\nchord_trainer.ini could also be used to set any of these parameters and more.')
     sys.exit(out)
 
@@ -51,8 +52,8 @@ class config:
 
         # process any command line args
         try:
-            opts, args = getopt.getopt(sys.argv[1:],'i:o:bc:dv:h',
-                ["input=","output=","bpm=","chords=","devices","verbose=","help"])
+            opts, args = getopt.getopt(sys.argv[1:],'i:o:b:c:de:v:h',
+                ["input=","output=","bpm=","chords=","devices","beats=","verbose=","help"])
 
         except getopt.GetoptError:
             usage(2)
@@ -73,6 +74,8 @@ class config:
                 self.audio.print_devices()
                 self.audio.uninit()
                 sys.exit()
+            elif opt in ['-e', '--beats']:
+                self.chord_beats = int(arg)
             elif opt in ['-v', '--verbose']:
                 self.audio = audio.audio()
                 self.audio.print_devices(filter=arg, verbose=True)

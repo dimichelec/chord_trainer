@@ -23,7 +23,7 @@ class audio:
     ONSET_ON_THRESH = 2e-4      # spectral flux threshold to determine event onset
     ONSET_OFF_THRESH = 4e-5     # spectral flux threshold to determine event end
 
-    MIN_ONSET_SAMPLES = 40      # samples to collect after onset before chordrec
+    MIN_ONSET_SAMPLES = 5      # samples to collect after onset before chordrec
 
 
     # print the set of input or output audio devices

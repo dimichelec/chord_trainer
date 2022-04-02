@@ -22,11 +22,12 @@ class ui:
             + f'{measure}:{beat}')
 
     # signal indicator ---------------------------------------------------
-    signal_on   = Style.BRIGHT + Fore.RED + Back.BLACK + '■'
-    signal_off  = Style.DIM    + Fore.RED + Back.BLACK + '□'
+    signal_on   = Style.BRIGHT + Fore.RED + Back.BLACK + '▀'  #'■'
+    signal_off  = Style.DIM    + Fore.RED + Back.BLACK + ' '  #'□'
 
     def draw_signal(self,signal):
-        print(f'\033[2;54H' + (self.signal_on if signal else self.signal_off))
+        #print(f'\033[2;54H' + (self.signal_on if signal else self.signal_off))
+        print(f'\033[4;4H' + (self.signal_on if signal else self.signal_off))
 
     # bpm ----------------------------------------------------------------
     def draw_bpm(self,bpm):
