@@ -2,12 +2,15 @@
 import msvcrt
 import pyfiglet
 import cursor
+import chords
 
 from colorama import Fore, Back, Style
 from colorama import init
 
 
 class ui:
+
+    chords = chords.chords()
 
     # score --------------------------------------------------------------
     def draw_score(self,score):
@@ -120,6 +123,16 @@ class ui:
                 + f'{self.chart_top+1};{self.last_chart_pointer_loc}H'
                 + self.chart_pointer_on)
 
+    # chord diagram ------------------------------------------------------
+    diagram_top       = 2
+    diagram_left      = 68
+    def draw_chart_diagram(self,root,type):
+        y = self.diagram_top
+        for line in self.chords.diagram(root,type):
+            print(f'\033[{y};{self.diagram_left}H{line}')
+            y += 1
+
+
     # stats lines --------------------------------------------------------
     stats_top       = chart_top + 3
     stats_left      = chart_left
@@ -153,6 +166,8 @@ class ui:
         # draw a box for the chord display
         self.draw_chord_box()
         self.draw_signal(False)
+
+        self.draw_chart_diagram('C','m9')
 
 
     def uninit(self):
