@@ -6,6 +6,14 @@ class chords:
         [ ('C','maj'), ('D','min'), ('E','min'), ('F','maj'), ('G','maj'), ('A','min'), ('B','dim') ]
     ]
 
+    chart_251 = [
+        [ # 'to play'   detected as     diagram
+          ('Cm9',       ('D#','maj'),   ('C','m9')),
+          ('Fm7',       ('F','min'),    ('F','m7')),
+          ('BbM7',      ('A#','maj'),   ('A#','M7')),
+        ]
+    ]
+
     # the standard tuning 3 bass strings of a guitar
     bass_tuning = ('E','A','D')
     notes = ('C','C#','D','D#','E','F','F#','G','G#','A','A#','B')
@@ -17,9 +25,17 @@ class chords:
     # ])
 
     formulas = [
+        ('', [
+            ((0,-1,2,1,0,-1), (1,0,1,3,5,0)),       # root on low E string
+            ((-1,0,2,2,2,-1), (0,1,5,1,3,0)),       # root on A string
+            ((-1,-1,0,2,3,2), (0,0,1,5,1,3))]),     # root on D string
+        ('m', [
+            ((0,-1,2,0,0,-1), (1,0,1,-3,5,0)),       # root on low E string
+            ((-1,0,2,2,1,-1), (0,1,5,1,-3,0)),       # root on A string
+            ((-1,-1,0,2,3,1), (0,0,1,5,1,-3))]),     # root on D string
         ('M7', [
             ((0,-1,1,1,0,-1), (1,0,7,3,5,0)),       # root on low E string
-            ((-1,0,2,3,2,-1), (0,1,5,7,3,0)),       # root on A string
+            ((-1,0,2,1,2,-1), (0,1,5,7,3,0)),       # root on A string
             ((-1,-1,0,2,2,2), (0,0,1,5,7,3))]),     # root on D string
         ('7', [
             ((0,-1,0,1,0,-1), (1,0,-7,3,5,0)),      # root on low E string

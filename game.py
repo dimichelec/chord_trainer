@@ -34,6 +34,7 @@ class game:
     def set_chart(self,chart):
         self.chart = chart
         self.chart_pos_max = len(self.chart)
+        
 
 
     def first_beat(self,measure):
